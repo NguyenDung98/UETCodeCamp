@@ -10,7 +10,7 @@
 
 #list {
     background-color: white;
-    height: 350px;
+    max-height: fit-content;
 }
 
 body {
@@ -51,16 +51,16 @@ input {
     box-shadow: none;
 }
 
-.add-btn {
+#add-btn {
     background-color: #d9d3d3;
 }
 
-#done {
+.done {
     text-decoration: line-through;
     background-color: #808080;
     color: white;
 }
 
-    #done:hover {
+    .done:hover {
         background: #808080 !important;
     }
