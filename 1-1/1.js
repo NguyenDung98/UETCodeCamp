@@ -8,7 +8,7 @@ main();
 function main() {
     // Add add-button listener (Add item to the list)
     addBtn.addEventListener("click", function () {
-        if (input !== "") {
+        if (input.value !== "") {
             newElement = toDoElement.cloneNode(true);
             newElement.classList.remove("d-none");
             newElement.classList.remove("done");
@@ -17,9 +17,10 @@ function main() {
             newElement.children[1].children[0].textContent = input.value;
             toDoElement.parentNode.appendChild(newElement);
             addElementListener(newElement);
+            addDeleteBtnListener(newElement.children[2]);
         }
     });
-    // add Input listener
+    // add input listener
     input.addEventListener("keyup", function (event) {
         if (event.keyCode === 13) {
             addBtn.click();
@@ -27,11 +28,18 @@ function main() {
     });
 }
 
-// add listener for new element
+// add "done" class for new element
 function addElementListener(element) {
     element.addEventListener("click", function () {
         this.classList.toggle("done");
         this.children[0].classList.toggle("d-none");
         this.children[1].classList.toggle("offset-1");
+    })
+}
+
+// add "delete" function for new element
+function addDeleteBtnListener(deleteBtn) {
+    deleteBtn.addEventListener("click", function () {
+        this.parentElement.remove();
     })
 }

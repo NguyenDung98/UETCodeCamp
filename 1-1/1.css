@@ -40,7 +40,7 @@ button {
         background-color: #d9d3d3;
     }
 
-    .btn-list:hover {
+    .btn-delete:hover {
         background-color: #f64343;
         color: white;
     }
