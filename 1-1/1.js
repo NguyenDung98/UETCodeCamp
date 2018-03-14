@@ -18,6 +18,7 @@ function main() {
             toDoElement.parentNode.appendChild(newElement);
             addElementListener(newElement);
             addDeleteBtnListener(newElement.children[2]);
+            input.value = "";
         }
     });
     // add input listener
