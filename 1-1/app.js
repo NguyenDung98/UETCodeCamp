@@ -1,12 +1,11 @@
 var input = document.getElementsByTagName("input")[0];
 var addBtn = document.getElementById("add-btn");
-var toDoElement = document.querySelectorAll(".row.mx-0")[0];
+var patternElement = document.querySelectorAll(".row.mx-0")[0];
 var newElement;
-var oldItems = [];
-var newItems = [];
+var oldItems = []; // items from previous time user loaded page
+var newItems = []; // include items added from this session and old items
 
-//
-var trial = [];
+var counter = 0;
 
 main();
 
@@ -14,16 +13,16 @@ function main() {
     // Add add-button listener (Add item to the list)
     addBtn.addEventListener("click", function () {
         if (input.value !== "") {
-            newElement = toDoElement.cloneNode(true);
+            newElement = patternElement.cloneNode(true);
             newElement.classList.remove("d-none");
             newElement.classList.remove("done");
             newElement.children[0].classList.add("d-none");
             newElement.children[1].classList.add("offset-1");
             newElement.children[1].children[0].textContent = input.value;
             addToStorage(newElement);
-            toDoElement.parentNode.appendChild(newElement);
+            patternElement.parentNode.appendChild(newElement);
             addElementListener(newElement);
-            addDeleteBtnListener(newElement.children[2]);
+            addDeleteBtnListener(newElement.children[2], counter++);
             input.value = "";
         }
     });
@@ -51,11 +50,13 @@ function addElementListener(element) {
 }
 
 // add "delete" function for new element
-function addDeleteBtnListener(deleteBtn) {
+// index in html DOES change, but in newItems it DOESN'T, UNTIL LOGIC AFFECTS IT
+function addDeleteBtnListener(deleteBtn, index) {
     deleteBtn.addEventListener("click", function () {
         // update data to storage
-        trial = this.parentElement.parentElement.children;
-        //
+        newItems[index].name = "";
+        localStorage.setItem("OldItems", JSON.stringify(newItems));
+        // remove item from UI
         this.parentElement.remove();
     });
 }
@@ -70,9 +71,12 @@ function addToStorage(element) {
     localStorage.setItem("OldItems", JSON.stringify(newItems));
 }
 
-// update status of items
+// update status of items (isDone)
+function updateData() {
 
-// load old items
+}
+
+// load old items and delete old items those are empty data-""
 function loadOldItems() {
     var itemsFromStorage = localStorage.getItem("OldItems");
     oldItems = JSON.parse(itemsFromStorage);
