@@ -5,7 +5,7 @@ var newElement;
 var oldItems = []; // items from previous time user loaded page
 var newItems = []; // include items added from this session and old items
 
-var counter = 0;
+var elementCounter = 0;
 
 main();
 
@@ -21,8 +21,8 @@ function main() {
             newElement.children[1].children[0].textContent = input.value;
             addToStorage(newElement);
             patternElement.parentNode.appendChild(newElement);
-            addElementListener(newElement);
-            addDeleteBtnListener(newElement.children[2], counter++);
+            addElementListener(newElement, elementCounter);
+            addDeleteBtnListener(newElement.children[2], elementCounter++);
             input.value = "";
         }
     });
@@ -40,12 +40,15 @@ function main() {
 }
 
 // add "done" class for new element
-function addElementListener(element) {
+function addElementListener(element, index) {
     element.addEventListener("click", function () {
+        // update data to UI
         this.classList.toggle("done");
         this.children[0].classList.toggle("d-none");
         this.children[1].classList.toggle("offset-1");
         // update data to storage
+        newItems[index].isDone = !newItems[index].isDone;
+        localStorage.setItem("OldItems", JSON.stringify(newItems));
     })
 }
 
@@ -71,17 +74,18 @@ function addToStorage(element) {
     localStorage.setItem("OldItems", JSON.stringify(newItems));
 }
 
-// update status of items (isDone)
-function updateData() {
-
-}
-
 // load old items and delete old items those are empty data-""
 function loadOldItems() {
     var itemsFromStorage = localStorage.getItem("OldItems");
     oldItems = JSON.parse(itemsFromStorage);
     for (var i = 0; i < oldItems.length; i++) {
-        input.value = oldItems[i].name;
-        addBtn.click();
+        if (oldItems[i].name !== "") {
+            input.value = oldItems[i].name;
+            addBtn.click();
+            if (oldItems[i].isDone) patternElement.parentElement.children[i + 1].click();
+        } else {
+            oldItems.splice(i, 1);
+            i--;
+        }
     }
 }
