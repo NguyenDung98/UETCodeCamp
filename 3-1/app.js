@@ -77,15 +77,17 @@ function addToStorage(element) {
 // load old items and delete old items those are empty data-""
 function loadOldItems() {
     var itemsFromStorage = localStorage.getItem("OldItems");
-    oldItems = JSON.parse(itemsFromStorage);
-    for (var i = 0; i < oldItems.length; i++) {
-        if (oldItems[i].name !== "") {
-            input.value = oldItems[i].name;
-            addBtn.click();
-            if (oldItems[i].isDone) patternElement.parentElement.children[i + 1].click();
-        } else {
-            oldItems.splice(i, 1);
-            i--;
+    if (itemsFromStorage !== null) {
+        oldItems = JSON.parse(itemsFromStorage);
+        for (var i = 0; i < oldItems.length; i++) {
+            if (oldItems[i].name !== "") {
+                input.value = oldItems[i].name;
+                addBtn.click();
+                if (oldItems[i].isDone) patternElement.parentElement.children[i + 1].click();
+            } else {
+                oldItems.splice(i, 1);
+                i--;
+            }
         }
     }
 }
