@@ -1,0 +1,66 @@
+#container {
+  max-width: 600px;
+  margin: 25px auto;
+  border: 1px solid black;
+}
+
+#title {
+  background-color: #f64343;
+}
+
+#list {
+  background-color: white;
+  max-height: fit-content;
+}
+
+body {
+  background-color: #d9d3d3;
+}
+
+*:focus {
+  outline: none !important;
+}
+
+h1 {
+  color: white;
+}
+
+button {
+  border: none;
+  outline: none;
+  background: inherit;
+  color: inherit;
+}
+
+.row {
+  height: 40px;
+}
+
+#list .row:hover {
+  background-color: #d9d3d3;
+}
+
+.btn-delete:hover {
+  background-color: #f64343;
+  color: white;
+}
+
+input {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+
+#add-btn {
+  background-color: #d9d3d3;
+}
+
+.done {
+  text-decoration: line-through;
+  background-color: #808080;
+  color: white;
+}
+
+.done:hover {
+  background: #808080 !important;
+}
